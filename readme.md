@@ -110,8 +110,6 @@ nodemon server.js
 
 ## 📷 Screenshots
 
-```
-screenshots/
 
 ![Home](screenshots/home.png)
 ![Add Trasaction](screenshots/Add_transaction.png)
@@ -120,7 +118,7 @@ screenshots/
 ![Graphs & Trends](screenshots/Graph.png)
 
 
-
+```
 
 ## 📚 What I Learned
 
