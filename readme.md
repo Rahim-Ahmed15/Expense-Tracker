@@ -112,7 +112,7 @@ nodemon server.js
 
 ```
 screenshots/
-│
+
 ![Home](screenshots/home.png)
 ![Add Trasaction](screenshots/Add_transaction.png)
 ![All](screenshots/all.png)
