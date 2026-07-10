@@ -119,9 +119,8 @@ screenshots/
 ![Search & Filter](screenshots/search.png)
 ![Graphs & Trends](screenshots/Graph.png)
 
-```
 
----
+
 
 ## 📚 What I Learned
 
