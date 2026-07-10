@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ExpenseX | Futuristic Expense Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <div class="viewport-glow"></div>
+    <header class="topbar">
+      <div class="brand">
+        <span class="badge">X</span>
+        <div>
+          <h1>ExpenseX</h1>
+          <p>Futuristic expense tracker</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="refresh-btn" class="btn btn-primary">Refresh</button>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="hero-panel glass-card">
+        <div>
+          <p class="eyebrow">Monthly balance</p>
+          <h2 id="balance-value">₹0.00</h2>
+          <p class="hero-note">Track income, manage expenses, and keep every detail under control.</p>
+        </div>
+        <div class="hero-status">
+          <span class="status-pill income">income</span>
+          <span class="status-pill expense">expense</span>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <article class="glass-card summary-card">
+          <p class="card-label">Total Income</p>
+          <h3 id="income-value">₹0.00</h3>
+        </article>
+        <article class="glass-card summary-card">
+          <p class="card-label">Total Expense</p>
+          <h3 id="expense-value">₹0.00</h3>
+        </article>
+        <article class="glass-card summary-card">
+          <p class="card-label">Transactions</p>
+          <h3 id="transaction-count">0</h3>
+        </article>
+      </section>
+
+      <section class="grid-layout">
+        <article class="glass-card form-card">
+          <div class="section-head">
+            <h2>Add / Edit Transaction</h2>
+            <p>Record income or expense with style.</p>
+          </div>
+          <form id="transaction-form" class="transaction-form">
+            <div class="field-group">
+              <label for="title">Title</label>
+              <input id="title" name="title" type="text" placeholder="e.g. Salary, rent" required />
+            </div>
+            <div class="field-group">
+              <label for="amount">Amount</label>
+              <input id="amount" name="amount" type="number" min="0" step="0.01" placeholder="0.00" required />
+            </div>
+            <div class="field-row">
+              <div class="field-group half">
+                <label>Type</label>
+                <div class="type-switcher">
+                  <label><input type="radio" name="type" value="income" checked /> Income</label>
+                  <label><input type="radio" name="type" value="expense" /> Expense</label>
+                </div>
+              </div>
+              <div class="field-group half">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                  <option value="" disabled selected>Select category</option>
+                  <option>Salary</option>
+                  <option>Groceries</option>
+                  <option>Bills</option>
+                  <option>Entertainment</option>
+                  <option>Travel</option>
+                  <option>Health</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-group half">
+                <label for="date">Date</label>
+                <input id="date" name="date" type="date" required />
+              </div>
+              <div class="field-group half">
+                <label for="notes">Notes</label>
+                <input id="notes" name="notes" type="text" placeholder="Optional note" />
+              </div>
+            </div>
+            <div class="action-row">
+              <button type="submit" class="btn btn-primary" id="submit-btn">Save</button>
+              <button type="button" class="btn btn-secondary" id="clear-btn">Clear</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="glass-card control-card">
+          <div class="section-head">
+            <h2>Search & Filters</h2>
+            <p>Slice through data instantly.</p>
+          </div>
+          <div class="control-grid">
+            <div class="control-group">
+              <label for="search">Search</label>
+              <input id="search" type="search" placeholder="Search title or category" />
+            </div>
+            <div class="control-group">
+              <label for="filter-type">Type</label>
+              <select id="filter-type">
+                <option value="">All</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="filter-category">Category</label>
+              <select id="filter-category">
+                <option value="">All</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="sort">Sort</label>
+              <select id="sort">
+                <option value="latest">Latest</option>
+                <option value="oldest">Oldest</option>
+                <option value="highest">Highest Amount</option>
+                <option value="lowest">Lowest Amount</option>
+              </select>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="glass-card data-card">
+        <div class="section-head">
+          <h2>Transaction Feed</h2>
+          <p>Review the latest spending and income entries.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="transaction-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <div class="pagination-row">
+          <button id="prev-page" class="btn btn-ghost">Previous</button>
+          <span id="page-indicator">Page 1</span>
+          <button id="next-page" class="btn btn-ghost">Next</button>
+        </div>
+      </section>
+
+      <section class="report-grid">
+        <article class="glass-card report-card">
+          <h2>Monthly Trend</h2>
+          <canvas id="monthly-chart"></canvas>
+        </article>
+        <article class="glass-card report-card">
+          <h2>Category Allocation</h2>
+          <canvas id="category-chart"></canvas>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer-bar">
+      <p>Built for an elegant futuristic expense tracking experience.</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
